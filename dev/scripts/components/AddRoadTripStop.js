@@ -13,10 +13,24 @@ export default class AddRoadTripStop extends React.Component {
 	submitStop(e) {
 		e.preventDefault();
 		console.log('stop submitted');
+		this.props.closeModal();
 	}
 	render() {
+		const openModal = {
+			visibility: 'visible',
+			opacity: 1,
+			position: 'absolute',
+			top: 0,
+			zIndex: 9,
+			left: '50%',
+			background: 'white'
+		}
+		const hideModal = {
+			visibility: 'hidden',
+			opacity: 0
+		}
 		return (
-			<div>
+			<div className="form-modal" style={this.props.isModalOpen ? openModal : hideModal}>
 				<form onSubmit={(e) => this.submitStop(e)}>
 					<label htmlFor="roadtrip-stop">Roadtrip Stop</label>
 					<input onChange={(e) => this.autocomplete(e)}

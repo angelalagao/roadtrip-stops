@@ -26,6 +26,7 @@ export default class RoadTripMap extends React.Component {
 			visibility: 'visible',
 			opacity: 1
 		}
+		// only show the map if the hideMap state in our app is false (changed when form is submitted)
 		return (
 			<div className="map-container">
 				<div id="map" ref="map" style={!this.props.hideMap ? showMap : hideMap}></div>

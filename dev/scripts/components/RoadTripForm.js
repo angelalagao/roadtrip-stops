@@ -24,6 +24,7 @@ export default class RoadTripForm extends React.Component {
 			dest: this.dest.value
 		}
 		this.props.addRoadTrip(roadTrip);
+		// will change our hideMap state in our app component to show the map 
 		this.props.renderMap();
 	}
 	render() {

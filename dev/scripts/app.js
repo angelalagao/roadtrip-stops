@@ -25,10 +25,13 @@ class App extends React.Component {
 		super();
 		this.state = {
 			roadTrip: {},
-			hideMap: true
+			hideMap: true,
+			isModalOpen: false
 		}
 		this.addRoadTrip = this.addRoadTrip.bind(this);
 		this.renderMap = this.renderMap.bind(this);
+		this.renderModal = this.renderModal.bind(this);
+		this.closeModal = this.closeModal.bind(this);
 	}
 
 	addRoadTrip(trip) {
@@ -46,8 +49,21 @@ class App extends React.Component {
 	}
 
 	renderMap() {
+		// on form submit we change the state and will pass it down as props to our RoadTripMap component
 		this.setState({
 			hideMap: false
+		});
+	}
+
+	renderModal() {
+		this.setState({
+			isModalOpen: true
+		});
+	}
+
+	closeModal() {
+		this.setState({
+			isModalOpen: false
 		});
 	}
 
@@ -65,13 +81,11 @@ class App extends React.Component {
 							<RoadTripForm addRoadTrip={this.addRoadTrip} renderMap={this.renderMap}/>
 							<RoadTripMap hideMap={this.state.hideMap}/>
 						</div>
-						{/*<div className="roadtrip-sidebar">
-							<Link to="/addRoadTripStop">
-								<button>Add a roadtrip stop</button>
-							</Link>
-							<Route path="/addRoadTripStop" component={AddRoadTripStop}/>
-							<RoadTripStop />
-						</div>*/}
+						<div className="roadtrip-sidebar">
+							<button onClick={this.renderModal}>Add a Roadtrip Stop</button>
+							<AddRoadTripStop isModalOpen={this.state.isModalOpen} closeModal={this.closeModal}/>
+							{/*on click of this button a modal should appear*/}
+						</div>
 					</div>
 				</main>
 			</Router>
