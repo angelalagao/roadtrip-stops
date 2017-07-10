@@ -7,7 +7,7 @@ export default class RoadTripMap extends React.Component {
 		this.initMap = this.initMap.bind(this);
 	}
 	componentDidMount() {
-		window.initMap = this.initMap
+		window.initMap = this.initMap;
 		loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyDAdUowwXhd2XJ22KGgBY6X2VaR1P6t21k&libraries=places&callback=initMap');
 	}
 	initMap() {
@@ -17,9 +17,18 @@ export default class RoadTripMap extends React.Component {
 		});
 	}
 	render() {
+		// refactor to be react animations instead
+		const hideMap = {
+			visibility: 'hidden',
+			opacity: 0
+		}
+		const showMap = {
+			visibility: 'visible',
+			opacity: 1
+		}
 		return (
 			<div className="map-container">
-				<div id="map" ref="map"></div>
+				<div id="map" ref="map" style={!this.props.hideMap ? showMap : hideMap}></div>
 			</div>
 		)
 	}

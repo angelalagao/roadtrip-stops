@@ -2,3 +2,22 @@
 	width: 400px;
 	height: 400px;
 }
+
+header {
+	text-align: center;
+}
+
+.wrapper {
+	display: flex;
+	justify-content: center;
+	width: 900px;
+	margin: 0 auto;
+}
+
+.roadtrip-main {
+	width: 65%;
+}
+
+.roadtrip-sidebar {
+	width: 45%;
+}

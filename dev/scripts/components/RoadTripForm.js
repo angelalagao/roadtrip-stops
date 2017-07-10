@@ -1,4 +1,5 @@
 import React from 'react';
+import RoadTripMap from './RoadTripMap.js';
 // generate a map
 // users can post a "road trip stop" with a review and/or advice - on a certain location
 // should display a photo-clip on the map
@@ -23,6 +24,7 @@ export default class RoadTripForm extends React.Component {
 			dest: this.dest.value
 		}
 		this.props.addRoadTrip(roadTrip);
+		this.props.renderMap();
 	}
 	render() {
 		return (
