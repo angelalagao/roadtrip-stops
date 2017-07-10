@@ -46,6 +46,8 @@ class App extends React.Component {
 		this.setState({
 			roadTrip
 		});
+		// we should be able to compare distances between the roadtrip start and dest within the roadtrip stops database from firebase
+		// from there we generate the road trip stop markers to be displayed on the map
 	}
 
 	renderMap() {
@@ -56,6 +58,7 @@ class App extends React.Component {
 	}
 
 	renderModal() {
+		// will render modal on click of "add a roadtrip stop" button
 		this.setState({
 			isModalOpen: true
 		});
@@ -68,7 +71,6 @@ class App extends React.Component {
 	}
 
 	render() {
-		// const map = !this.state.hideMap ? <RoadTripMap /> : null;
 		return (
 			// hide the map on first run - then on submit of the form - show map
 			<Router>
@@ -82,9 +84,12 @@ class App extends React.Component {
 							<RoadTripMap hideMap={this.state.hideMap}/>
 						</div>
 						<div className="roadtrip-sidebar">
-							<button onClick={this.renderModal}>Add a Roadtrip Stop</button>
-							<AddRoadTripStop isModalOpen={this.state.isModalOpen} closeModal={this.closeModal}/>
 							{/*on click of this button a modal should appear*/}
+							<button onClick={this.renderModal}>Add a Roadtrip Stop</button>
+							<AddRoadTripStop 
+								isModalOpen={this.state.isModalOpen} 
+								closeModal={this.closeModal}
+							/>
 						</div>
 					</div>
 				</main>

@@ -1,6 +1,8 @@
 import React from 'react';
 
 export default class AddRoadTripStop extends React.Component {
+	// should be able to send this data to firebase
+	// use roadtrip data to render points on the map when a user searches for their road trip
 	autocomplete(e) {
 		e.preventDefault();
 		const stop = new google.maps.places.Autocomplete((document.getElementById('roadtrip-stop')),
