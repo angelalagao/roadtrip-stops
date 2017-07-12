@@ -27,6 +27,7 @@
     "react-inlinesvg": "^0.6.0",
     "react-router-dom": "^4.1.1",
     "react-svg": "^2.1.21",
+    "re-base": "2.2.0",
     "underscore": "^1.8.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"

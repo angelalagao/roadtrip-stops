@@ -1,20 +1,58 @@
 import React from 'react';
+import firebase, {dbRef} from '../firebase.js';
+import _ from 'underscore';
 
 export default class AddRoadTripStop extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			roadtripStop: {},
+			images: [],
+			loading: false
+		}
+		this.uploadImage = this.uploadImage.bind(this);
+	}
 	// should be able to send this data to firebase
 	// use roadtrip data to render points on the map when a user searches for their road trip
 	autocomplete(e) {
 		e.preventDefault();
-		const stop = new google.maps.places.Autocomplete((document.getElementById('roadtrip-stop')),
+		const stop = new google.maps.places.Autocomplete((document.getElementById('roadtrip_stop')),
 			{types: ['geocode']});
+		
 	}
 	uploadImage(e) {
 		e.preventDefault();
-		console.log('image uploaded');
+		const imagesArray = [];
+		const images = this.image.files;
+		_.each(images, image => {
+			if (image.size < 2048576) {
+				const storageRef = firebase.storage().ref('/');
+				const thisImage = storageRef.child(image.name);
+				thisImage.put(image).then((snapshot) => {
+					thisImage.getDownloadURL().then((url) => {
+						imagesArray.push(url);
+						this.setState({ images: imagesArray, loading: true });
+					});
+				})
+			}
+		});
 	}
 	submitStop(e) {
 		e.preventDefault();
-		console.log('stop submitted');
+		const roadtripStop = {
+			roadtrip_stop: this.stop.value,
+			roadtrip_suggestion: this.suggestion.value,
+			roadtrip_images: this.state.images
+		}
+		console.log(roadtripStop);
+		dbRef.push({
+			roadtripStop
+		}).then((snapshot) => {
+			const key = snapshot.key;
+			dbRef.child(key).update({
+				id: key
+			})
+		});
 		this.props.closeModal();
 	}
 	render() {
@@ -34,18 +72,19 @@ export default class AddRoadTripStop extends React.Component {
 		return (
 			<div className="form-modal" style={this.props.isModalOpen ? openModal : hideModal}>
 				<form onSubmit={(e) => this.submitStop(e)}>
-					<label htmlFor="roadtrip-stop">Roadtrip Stop</label>
+					<label htmlFor="roadtrip_stop">Roadtrip Stop</label>
 					<input onChange={(e) => this.autocomplete(e)}
-							ref={(input) => this.stop = input} id="roadtrip-stop"
-							type="text" name="roadtrip-stop" placeholder=""/>
-					<Rating />
+							ref={(input) => this.stop = input} id="roadtrip_stop"
+							type="text" name="roadtrip_stop" placeholder=""/>
 					<fieldset>
-						<label htmlFor="roadtrip-image">Upload Images</label>
+						<label htmlFor="roadtrip_image">Upload Images</label>
 						<input ref={(input) => this.image = input} type="file"
-								name="roadtrip-image" accept="image/*" />
+								name="roadtrip_image" accept="image/*" multiple="multiple" />
 						<button onClick={(e) => this.uploadImage(e)}>Upload Image</button>
 					</fieldset>
-					<textarea name="roadtrip-suggestion" cols="30" rows="10" 
+					<textarea name="roadtrip_suggestion"
+								ref={(input) => this.suggestion = input}
+								cols="30" rows="10" 
 							placeholder="This place was cool because..."></textarea>
 					<button type="submit">+Add Stop</button>
 				</form>
@@ -54,29 +93,19 @@ export default class AddRoadTripStop extends React.Component {
 	}
 }
 
+// need to map out 5 on the render()
 const Rating = () => {
 	return (
 		<fieldset className="rating">
-			<input type="radio" id="star5" name="rating" value="5" />
-			<label className = "full" htmlFor="star5" title="Awesome - 5 stars"></label>
-			<input type="radio" id="star4half" name="rating" value="4 and a half" />
-			<label className="half" htmlFor="star4half" title="Pretty good - 4.5 stars"></label>
-			<input type="radio" id="star4" name="rating" value="4" />
-			<label className = "full" htmlFor="star4" title="Pretty good - 4 stars"></label>
-			<input type="radio" id="star3half" name="rating" value="3 and a half" />
-			<label className="half" htmlFor="star3half" title="Meh - 3.5 stars"></label>
-			<input type="radio" id="star3" name="rating" value="3" />
-			<label className = "full" htmlFor="star3" title="Meh - 3 stars"></label>
-			<input type="radio" id="star2half" name="rating" value="2 and a half" />
-			<label className="half" htmlFor="star2half" title="Kinda bad - 2.5 stars"></label>
-			<input type="radio" id="star2" name="rating" value="2" />
-			<label className = "full" htmlFor="star2" title="Kinda bad - 2 stars"></label>
-			<input type="radio" id="star1half" name="rating" value="1 and a half" />
-			<label className="half" htmlFor="star1half" title="Meh - 1.5 stars"></label>
-			<input type="radio" id="star1" name="rating" value="1" />
-			<label className = "full" htmlFor="star1" title="Sucks big time - 1 star"></label>
-			<input type="radio" id="starhalf" name="rating" value="half" />
-			<label className="half" htmlFor="starhalf" title="Sucks big time - 0.5 stars"></label>
+			<svg xmlns="http://www.w3.org/2000/svg"
+				width="20"
+				height="20"
+				viewBox="0 0 12 12">
+				<polygon
+					fill="#4080FF"
+					points="6 8.5200001 2.47328849 10.854102 3.60333748 6.77872286 0.293660902 4.14589803 4.51878111 3.96127709 6 0 7.48121889 3.96127709 11.7063391 4.14589803 8.39666252 6.77872286 9.52671151 10.854102">
+				</polygon>
+			</svg>
 		</fieldset>
 	)
 }
