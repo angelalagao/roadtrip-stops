@@ -47,11 +47,6 @@ export default class AddRoadTripStop extends React.Component {
 		console.log(roadtripStop);
 		dbRef.push({
 			roadtripStop
-		}).then((snapshot) => {
-			const key = snapshot.key;
-			dbRef.child(key).update({
-				id: key
-			})
 		});
 		this.props.closeModal();
 	}
