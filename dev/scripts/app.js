@@ -34,14 +34,14 @@ class App extends React.Component {
 		this.closeModal = this.closeModal.bind(this);
 	}
 
-	addRoadTrip(trip) {
+	addRoadTrip(roadTrip) {
 		// update our state
 		// take a copy of our state
 		// spread operator will take every item in our object and spread it into this object
-		const roadTrip = this.state.roadTrip;
-		// add in our new roadtrip
-		const timestamp = Date.now(); // using unique timestamp as a key
-		roadTrip[`roadTrip-${timestamp}`] = trip;
+		// const roadTrip = this.state.roadTrip;
+		// // add in our new roadtrip
+		// const timestamp = Date.now(); // using unique timestamp as a key
+		// roadTrip[`roadTrip-${timestamp}`] = trip;
 		// set state
 		this.setState({
 			roadTrip
@@ -71,6 +71,7 @@ class App extends React.Component {
 	}
 
 	render() {
+		const showMap = !this.state.hideMap ? <RoadTripMap roadTrip={this.state.roadTrip} /> : null;
 		return (
 			// hide the map on first run - then on submit of the form - show map
 			<Router>
@@ -81,7 +82,8 @@ class App extends React.Component {
 					<div className="wrapper">
 						<div className="roadtrip-main">
 							<RoadTripForm addRoadTrip={this.addRoadTrip} renderMap={this.renderMap}/>
-							<RoadTripMap hideMap={this.state.hideMap}/>
+							{showMap}
+							{/*<RoadTripMap hideMap={this.state.hideMap} roadTrip={this.state.roadTrip}/>*/}
 						</div>
 						<div className="roadtrip-sidebar">
 							{/*on click of this button a modal should appear*/}

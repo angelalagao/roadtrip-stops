@@ -1,5 +1,6 @@
 import React from 'react';
 import RoadTripMap from './RoadTripMap.js';
+import { loadJS } from '../helper.js';
 // generate a map
 // users can post a "road trip stop" with a review and/or advice - on a certain location
 // should display a photo-clip on the map
@@ -10,6 +11,9 @@ import RoadTripMap from './RoadTripMap.js';
 // can save roadtrip on their profile - using firebase
 
 export default class RoadTripForm extends React.Component {
+	componentDidMount() {
+		loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyDAdUowwXhd2XJ22KGgBY6X2VaR1P6t21k&libraries=places');
+	}
 	autocomplete(e) {
 		e.preventDefault();
 		const origin = new google.maps.places.Autocomplete((document.getElementById('origin')),
@@ -26,6 +30,8 @@ export default class RoadTripForm extends React.Component {
 		this.props.addRoadTrip(roadTrip);
 		// will change our hideMap state in our app component to show the map 
 		this.props.renderMap();
+		// need to call initmap again on submit
+		window.initMap;
 	}
 	render() {
 		return (
