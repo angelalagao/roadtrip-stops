@@ -14,13 +14,11 @@ export default class RoadTripMap extends React.Component {
 		super();
 		this.state = {
 			roadTripStops: [],
-			map: '',
 			routes: []
 		}
 		this.initMap = this.initMap.bind(this);
 		this.calculateAndDisplayRoute = this.calculateAndDisplayRoute.bind(this);
 		this.getRouteCoordinates = this.getRouteCoordinates.bind(this);
-		this.compareRoadtripStopsToRoute = this.compareRoadtripStopsToRoute.bind(this);
 	}
 
 	// need to call initmap to get autocomplete to work on our inputs
@@ -57,10 +55,6 @@ export default class RoadTripMap extends React.Component {
 		this.map = new google.maps.Map(this.refs.map, {
 			center: {lat: 43.6532, lng: -79.3832},
 			zoom: 12
-		});
-
-		this.setState({
-			map: this.map
 		});
 
 		directionsDisplay.setMap(this.map);
@@ -118,15 +112,35 @@ export default class RoadTripMap extends React.Component {
 		this.setState({
 			routes
 		});
-		this.compareRoadtripStopsToRoute();
 	}
 
 
-	compareRoadtripStopsToRoute() {
+	componentDidUpdate(prevProps, prevState) {
 		let roadTripStops = Array.from(this.state.roadTripStops);
 		let finalRoadTripStops = [];
 
-		// compare routes lat lng to roadtrip stops lat lng
+		// compare each roadtrop stop lat lng to the route lat lng
+
+		if (this.state.routes !== prevState.routes) {
+			let userRoutes = Array.from(this.state.routes);
+			for (let x = 0; x < roadTripStops.length; x++) {
+				let stopLatLng = roadTripStops[x].roadtrip_stops.roadtrip_latLng;
+				let stop = new google.maps.LatLng(stopLatLng.lat, stopLatLng.lng);
+				for (let y = 0; y < userRoutes.length; y++) {
+					let routeLatLng = userRoutes[y];
+					let route = new google.maps.LatLng(routeLatLng.lat, routeLatLng.lng);
+					let difference = google.maps.geometry.spherical.computeDistanceBetween(route, stop);
+					if (difference < 10000) {
+						// record the roadtrip stops with distance difference less than 10 km
+						
+					}
+				}
+			}
+		}
+	}
+
+	calcDistance() {
+
 	}
 
 	render() {
