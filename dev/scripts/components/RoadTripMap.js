@@ -1,6 +1,7 @@
 import React from 'react';
 import { loadJS } from '../helper.js';
 import firebase, { dbRef } from '../firebase.js';
+import _ from 'underscore';
 
 
 // 1 solution:
@@ -13,13 +14,12 @@ export default class RoadTripMap extends React.Component {
 		super();
 		this.state = {
 			roadTripStops: [],
-			map: ''
+			map: '',
+			routes: []
 		}
 		this.initMap = this.initMap.bind(this);
 		this.calculateAndDisplayRoute = this.calculateAndDisplayRoute.bind(this);
 		this.getRouteCoordinates = this.getRouteCoordinates.bind(this);
-		this.getRoadtripStopLatLng = this.getRoadtripStopLatLng.bind(this);
-		this.getResultLatLng = this.getResultLatLng.bind(this);
 		this.compareRoadtripStopsToRoute = this.compareRoadtripStopsToRoute.bind(this);
 	}
 
@@ -49,7 +49,6 @@ export default class RoadTripMap extends React.Component {
 	}
 
 	initMap() {
-
 		// declaring variables to display waypoints and route path
 		var directionsService = new google.maps.DirectionsService();
 		var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -109,57 +108,25 @@ export default class RoadTripMap extends React.Component {
 		const route = routeArray.overview_path;
 		console.log(response);
 
-		const polyline = new google.maps.Polyline({
-			map: this.state.map
+		let routes = route.map(singleRoute => {
+			return {
+				lat: singleRoute.lat(),
+				lng: singleRoute.lng()
+			}
 		});
 
-		let latArray = [];
-		let lngArray = [];
-
-		let path = polyline.getPath();
-		for (let x = 0; x < route.length; x++) {
-			const position = new google.maps.LatLng(route[x].lat(), route[x].lng());
-			// console.log(position);
-			latArray[x] = route[x].lat;
-			lngArray[x] = route[x].lng;
-			path.push(position);
-		}
+		this.setState({
+			routes
+		});
 		this.compareRoadtripStopsToRoute();
-		// console.log(path);
-		// console.log(latArray);
 	}
 
-	getRoadtripStopLatLng(callback, address) {
-		let geocoder = new google.maps.Geocoder();
-		if (geocoder) {
-			geocoder.geocode({
-				'address': address
-			}, (results, status) => {
-				if (status == google.maps.GeocoderStatus.OK) {
-					callback(results[0]);
-				}
-			});
-		}
-	}
-
-	getResultLatLng(result) {
-		const lat = result.geometry.location.lat();
-		const lng = result.geometry.location.lng();
-		console.log('lat', lat);
-		console.log('lng', lng);
-
-		// need to compare distances b/w these lat lngs with the route lat lngs 
-	}
 
 	compareRoadtripStopsToRoute() {
 		let roadTripStops = Array.from(this.state.roadTripStops);
 		let finalRoadTripStops = [];
-		finalRoadTripStops = roadTripStops.forEach((stop) => {
-			let latStop = stop.roadtrip_stops.roadtrip_stop;
-			let lngStop = stop.roadtrip_stops.roadtrip_stop;
-			this.getRoadtripStopLatLng(this.getResultLatLng, latStop);
-			this.getRoadtripStopLatLng(this.getResultLatLng, lngStop);
-		});
+
+		// compare routes lat lng to roadtrip stops lat lng
 	}
 
 	render() {

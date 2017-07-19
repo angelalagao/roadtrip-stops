@@ -8,9 +8,11 @@ export default class AddRoadTripStop extends React.Component {
 		this.state = {
 			roadtripStop: {},
 			images: [],
-			loading: false
+			loading: false,
+			latLng: {}
 		}
 		this.uploadImage = this.uploadImage.bind(this);
+		this.convertToLatLng = this.convertToLatLng.bind(this);
 	}
 	// should be able to send this data to firebase
 	// use roadtrip data to render points on the map when a user searches for their road trip
@@ -37,19 +39,51 @@ export default class AddRoadTripStop extends React.Component {
 			}
 		});
 	}
+
+	getRoadtripStopLatLng(callback, address) {
+		let geocoder = new google.maps.Geocoder();
+		if (geocoder) {
+			geocoder.geocode({
+				'address': address
+			}, (results, status) => {
+				if (status == google.maps.GeocoderStatus.OK) {
+					callback(results[0]);
+				}
+			});
+		}
+	}
+
+	convertToLatLng(result) {
+		const locations = result.geometry;
+		this.setState({
+			latLng: {lat: locations.location.lat(), lng: locations.location.lng()}
+		});
+	}
+
 	submitStop(e) {
 		e.preventDefault();
+		this.getRoadtripStopLatLng(this.convertToLatLng, this.stop.value);
 		const roadtripStop = {
 			roadtrip_stop: this.stop.value,
 			roadtrip_suggestion: this.suggestion.value,
-			roadtrip_images: this.state.images
+			roadtrip_images: this.state.images,
+			roadtrip_latLng: {},
+			id: ''
 		}
+
 		console.log(roadtripStop);
 		dbRef.push({
 			roadtripStop
+		}).then(snapshot => {
+			dbRef.child(`${snapshot.key}/roadtripStop`).update({
+				id: snapshot.key,
+				roadtrip_latLng: this.state.latLng
+			});
 		});
+
 		this.props.closeModal();
 	}
+
 	render() {
 		const openModal = {
 			visibility: 'visible',
@@ -65,7 +99,7 @@ export default class AddRoadTripStop extends React.Component {
 			opacity: 0
 		}
 		return (
-			<div className="form-modal" style={this.props.isModalOpen ? openModal : hideModal}>
+			<div className="form-modal" ref="roadtripForm" style={this.props.isModalOpen ? openModal : hideModal}>
 				<form onSubmit={(e) => this.submitStop(e)}>
 					<label htmlFor="roadtrip_stop">Roadtrip Stop</label>
 					<input onChange={(e) => this.autocomplete(e)}
