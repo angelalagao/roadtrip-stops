@@ -15,7 +15,8 @@ export default class RoadTripMap extends React.Component {
 		this.state = {
 			roadTripStops: [],
 			routes: [],
-			userStops: []
+			userStops: [],
+			map: ''
 		}
 		this.initMap = this.initMap.bind(this);
 		this.calculateAndDisplayRoute = this.calculateAndDisplayRoute.bind(this);
@@ -56,6 +57,10 @@ export default class RoadTripMap extends React.Component {
 		this.map = new google.maps.Map(this.refs.map, {
 			center: {lat: 43.6532, lng: -79.3832},
 			zoom: 12
+		});
+
+		this.setState({
+			map: this.map
 		});
 
 		directionsDisplay.setMap(this.map);
@@ -126,22 +131,6 @@ export default class RoadTripMap extends React.Component {
 		if (this.state.routes !== prevState.routes) {
 			let userRoutes = Array.from(this.state.routes);
 
-			// finalRoadTripStops = roadTripStops.map(stop => {
-			// 	let stopLatLng = stop.roadtrip_stops.roadtrip_latLng;
-			// 	let stopObj = new google.maps.LatLng(stopLatLng.lat, stopLatLng.lng);
-			// 	let routeObj;
-			// 	userRoutes.map(route => {
-			// 		routeObj = new google.maps.LatLng(route.lat, route.lng);
-			// 		let difference = google.maps.geometry.spherical.computeDistanceBetween(routeObj, stopObj);
-			// 		if (difference < 10000) {
-			// 			userStops.push({
-			// 				stop: stop,
-			// 				difference: difference
-			// 			});
-			// 		}
-			// 	});
-			// });
-
 			for (let x = 0; x < roadTripStops.length; x++) {
 				let stopLatLng = roadTripStops[x].roadtrip_stops.roadtrip_latLng;
 				let stop = new google.maps.LatLng(stopLatLng.lat, stopLatLng.lng);
@@ -149,7 +138,7 @@ export default class RoadTripMap extends React.Component {
 					let routeLatLng = userRoutes[y];
 					let route = new google.maps.LatLng(routeLatLng.lat, routeLatLng.lng);
 					let difference = google.maps.geometry.spherical.computeDistanceBetween(route, stop);
-					if (difference < 10000) {
+					if (difference < 15000) {
 						// record the roadtrip stops with distance difference less than 10 km
 						finalRoadTripStops.push({
 							stops: roadTripStops[x].roadtrip_stops
@@ -160,9 +149,20 @@ export default class RoadTripMap extends React.Component {
 			const userStops = _.uniq(finalRoadTripStops, stop => {
 				return stop.stops.id;
 			});
-			console.log(userStops);
+			this.setState({
+				userStops
+			});
 		}
-		
+		if (this.state.userStops !== prevState.userStops) {
+			this.state.userStops.forEach(stop => {
+				const lat = stop.stops.roadtrip_latLng.lat;
+				const lng = stop.stops.roadtrip_latLng.lng;
+				const marker = new google.maps.Marker({
+					position: {lat, lng},
+					map: this.state.map
+				});
+			});
+		}
 	}
 
 	render() {

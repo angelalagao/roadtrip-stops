@@ -11,8 +11,12 @@ export default class AddRoadTripStop extends React.Component {
 			loading: false,
 			latLng: {}
 		}
+		this.baseState = this.state;
 		this.uploadImage = this.uploadImage.bind(this);
 		this.convertToLatLng = this.convertToLatLng.bind(this);
+		this.resetForm = this.resetForm.bind(this);
+		this.getRoadtripStopLatLng = this.getRoadtripStopLatLng.bind(this);
+		this.submitStop = this.submitStop.bind(this);
 	}
 	// should be able to send this data to firebase
 	// use roadtrip data to render points on the map when a user searches for their road trip
@@ -72,16 +76,30 @@ export default class AddRoadTripStop extends React.Component {
 		}
 
 		console.log(roadtripStop);
-		dbRef.push({
+		this.setState({
 			roadtripStop
-		}).then(snapshot => {
-			dbRef.child(`${snapshot.key}/roadtripStop`).update({
-				id: snapshot.key,
-				roadtrip_latLng: this.state.latLng
-			});
 		});
-
 		this.props.closeModal();
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.latLng !== prevState.latLng && this.state.roadtripStop) {
+			const roadtripStop = this.state.roadtripStop;
+			dbRef.push({
+				roadtripStop
+			}).then(snapshot => {
+				dbRef.child(`${snapshot.key}/roadtripStop`).update({
+					id: snapshot.key,
+					roadtrip_latLng: this.state.latLng
+				});
+			}, () => {
+				this.resetForm();
+			})
+		}
+	}
+
+	resetForm() {
+		this.setState(this.baseState);
 	}
 
 	render() {
