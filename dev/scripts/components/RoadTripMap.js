@@ -14,7 +14,8 @@ export default class RoadTripMap extends React.Component {
 		super();
 		this.state = {
 			roadTripStops: [],
-			routes: []
+			routes: [],
+			userStops: []
 		}
 		this.initMap = this.initMap.bind(this);
 		this.calculateAndDisplayRoute = this.calculateAndDisplayRoute.bind(this);
@@ -118,11 +119,29 @@ export default class RoadTripMap extends React.Component {
 	componentDidUpdate(prevProps, prevState) {
 		let roadTripStops = Array.from(this.state.roadTripStops);
 		let finalRoadTripStops = [];
+		let userStops = []
 
 		// compare each roadtrop stop lat lng to the route lat lng
 
 		if (this.state.routes !== prevState.routes) {
 			let userRoutes = Array.from(this.state.routes);
+
+			// finalRoadTripStops = roadTripStops.map(stop => {
+			// 	let stopLatLng = stop.roadtrip_stops.roadtrip_latLng;
+			// 	let stopObj = new google.maps.LatLng(stopLatLng.lat, stopLatLng.lng);
+			// 	let routeObj;
+			// 	userRoutes.map(route => {
+			// 		routeObj = new google.maps.LatLng(route.lat, route.lng);
+			// 		let difference = google.maps.geometry.spherical.computeDistanceBetween(routeObj, stopObj);
+			// 		if (difference < 10000) {
+			// 			userStops.push({
+			// 				stop: stop,
+			// 				difference: difference
+			// 			});
+			// 		}
+			// 	});
+			// });
+
 			for (let x = 0; x < roadTripStops.length; x++) {
 				let stopLatLng = roadTripStops[x].roadtrip_stops.roadtrip_latLng;
 				let stop = new google.maps.LatLng(stopLatLng.lat, stopLatLng.lng);
@@ -132,15 +151,18 @@ export default class RoadTripMap extends React.Component {
 					let difference = google.maps.geometry.spherical.computeDistanceBetween(route, stop);
 					if (difference < 10000) {
 						// record the roadtrip stops with distance difference less than 10 km
-						
+						finalRoadTripStops.push({
+							stops: roadTripStops[x].roadtrip_stops
+						})
 					}
 				}
 			}
+			const userStops = _.uniq(finalRoadTripStops, stop => {
+				return stop.stops.id;
+			});
+			console.log(userStops);
 		}
-	}
-
-	calcDistance() {
-
+		
 	}
 
 	render() {

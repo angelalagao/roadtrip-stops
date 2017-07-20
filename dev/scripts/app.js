@@ -75,9 +75,9 @@ class App extends React.Component {
 		return (
 			// hide the map on first run - then on submit of the form - show map
 			<Router>
-				<main>
+				<main className="main-wrapper">
 					<header>
-						<h1>Roadtrip Stops!</h1>
+						<h1>Roadtrip Stops</h1>
 					</header>
 					<div className="wrapper">
 						<div className="roadtrip-main">

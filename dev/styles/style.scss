@@ -1,3 +1,24 @@
+@import 'partials/setup';
+@import 'partials/variables';
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-size: 1.6rem;
+	font-family: $bodyFont;
+	background: url('../../assets/bground.jpg') no-repeat;
+	background-size: cover;
+	// background: linear-gradient(0deg, rgba($sandColor,0.85) 0%, rgba($greyColor, 0.7) 100%);
+}
+
+h1 {
+	font-family: $titleFont;
+	font-size: 7.0rem;
+	// color: $mainColor;
+}
+
 #map {
 	width: 400px;
 	height: 400px;
@@ -5,6 +26,12 @@
 
 header {
 	text-align: center;
+}
+
+.main-wrapper {
+	background: #fff;
+	max-width: 80%;
+	margin: 0 auto;
 }
 
 .wrapper {
