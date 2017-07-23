@@ -167,10 +167,26 @@ export default class RoadTripMap extends React.Component {
 			this.state.userStops.forEach(stop => {
 				const lat = stop.stops.roadtrip_latLng.lat;
 				const lng = stop.stops.roadtrip_latLng.lng;
+				const content = `Stop by ${stop.stops.roadtrip_stop}!
+								<br>Suggestions: ${stop.stops.roadtrip_suggestion}`
+				const infoWindow = new google.maps.InfoWindow({
+					content: content
+				});
 				const marker = new google.maps.Marker({
 					position: {lat, lng},
-					map: this.state.map
-					// icon: customMarker
+					map: this.state.map,
+					icon: {
+						path: 'M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z',
+						fillColor: '#8B756C',
+						fillOpacity: 0.6,
+						anchor: new google.maps.Point(0,0),
+						strokeWeight: 2,
+						strokeColor: '#1d3543',
+						scale: 2
+					}
+				});
+				marker.addListener('click', () => {
+					infoWindow.open(this.state.map, marker);
 				});
 			});
 		}
