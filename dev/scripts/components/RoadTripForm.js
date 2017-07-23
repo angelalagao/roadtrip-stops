@@ -41,6 +41,8 @@ export default class RoadTripForm extends React.Component {
 		this.setState({
 			submitted: true
 		});
+		// need to change the styling one form is submitted
+		this.props.submitForm();
 	}
 	render() {
 		const submittedStyle = {

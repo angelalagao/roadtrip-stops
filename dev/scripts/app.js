@@ -24,12 +24,14 @@ class App extends React.Component {
 		this.state = {
 			roadTrip: {},
 			hideMap: true,
-			isModalOpen: false
+			isModalOpen: false,
+			formSubmitted: false
 		}
 		this.addRoadTrip = this.addRoadTrip.bind(this);
 		this.renderMap = this.renderMap.bind(this);
 		this.renderModal = this.renderModal.bind(this);
 		this.closeModal = this.closeModal.bind(this);
+		this.submitForm = this.submitForm.bind(this);
 	}
 
 	addRoadTrip(roadTrip) {
@@ -68,8 +70,21 @@ class App extends React.Component {
 		});
 	}
 
+	submitForm() {
+		// wanna change our styling when form is submitted
+		this.setState({
+			formSubmitted: true
+		});
+	}
+
 	render() {
 		const showMap = !this.state.hideMap ? <RoadTripMap roadTrip={this.state.roadTrip} /> : null;
+		const buttonStyle = {
+			position: 'absolute',
+			top: '50px',
+			right: '50px',
+			zIndex: 3
+		}
 		return (
 			// hide the map on first run - then on submit of the form - show map
 			<Router>
@@ -81,10 +96,14 @@ class App extends React.Component {
 							<p>Search some cool stops along your roadtrip route! Or suggest some cool stops for other roadtrippers!</p>
 						</header>
 						<div className="wrapper">
-							<RoadTripForm addRoadTrip={this.addRoadTrip} renderMap={this.renderMap}/>
+							<RoadTripForm addRoadTrip={this.addRoadTrip} renderMap={this.renderMap} 
+								submitForm={this.submitForm}/>
 							<div className="roadtrip-sidebar">
 								{/*on click of this button a modal should appear*/}
-								<button onClick={this.renderModal}>Add a Roadtrip Stop</button>
+								<button onClick={this.renderModal}
+									style={this.state.formSubmitted ? buttonStyle : null}>
+									Add a Roadtrip Stop
+								</button>
 								<AddRoadTripStop 
 									isModalOpen={this.state.isModalOpen} 
 									closeModal={this.closeModal}
