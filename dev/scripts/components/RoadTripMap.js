@@ -123,6 +123,9 @@ export default class RoadTripMap extends React.Component {
 
 
 	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.roadTrip !== this.props.roadTrip) {
+			this.initMap();
+		}
 		let roadTripStops = Array.from(this.state.roadTripStops);
 		let finalRoadTripStops = [];
 		let userStops = []

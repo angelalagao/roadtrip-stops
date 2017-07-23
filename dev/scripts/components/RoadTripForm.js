@@ -14,8 +14,9 @@ export default class RoadTripForm extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			submitted: false
+			submitted: false,
 		}
+		this.clearForm = this.clearForm.bind(this);
 	}
 	componentDidMount() {
 		loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyDAdUowwXhd2XJ22KGgBY6X2VaR1P6t21k&libraries=places');
@@ -43,6 +44,11 @@ export default class RoadTripForm extends React.Component {
 		});
 		// need to change the styling one form is submitted
 		this.props.submitForm();
+		this.clearForm();
+	}
+	clearForm() {
+		this.origin.value = '';
+		this.dest.value = '';
 	}
 	render() {
 		const submittedStyle = {

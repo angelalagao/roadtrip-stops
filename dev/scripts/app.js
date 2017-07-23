@@ -77,6 +77,13 @@ class App extends React.Component {
 		});
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.roadTrip !== this.state.roadTrip) {
+			return (
+				<RoadTripMap roadTrip={this.state.roadTrip} />
+			)
+		}
+	}
 	render() {
 		const showMap = !this.state.hideMap ? <RoadTripMap roadTrip={this.state.roadTrip} /> : null;
 		const buttonStyle = {
