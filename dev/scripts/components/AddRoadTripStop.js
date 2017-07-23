@@ -39,7 +39,7 @@ export default class AddRoadTripStop extends React.Component {
 						imagesArray.push(url);
 						this.setState({ images: imagesArray, loading: true });
 					});
-				})
+				});
 			}
 		});
 	}

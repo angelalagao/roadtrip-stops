@@ -1,5 +1,6 @@
 @import 'partials/setup';
 @import 'partials/variables';
+@import 'partials/button';
 
 html {
 	font-size: 62.5%;
@@ -10,28 +11,54 @@ body {
 	font-family: $bodyFont;
 	background: url('../../assets/bground.jpg') no-repeat;
 	background-size: cover;
-	// background: linear-gradient(0deg, rgba($sandColor,0.85) 0%, rgba($greyColor, 0.7) 100%);
 }
 
 h1 {
 	font-family: $titleFont;
 	font-size: 7.0rem;
-	// color: $mainColor;
+	letter-spacing: 3.4px;
+	margin: 0;
+	// text-transform: uppercase;
+	color: #fff;
+	text-shadow: 2px 2px 1px #000;
 }
 
 #map {
-	width: 400px;
-	height: 400px;
+	width: 100%;
+	min-height: 100vh;
+}
+
+.map-container {
+	width: 100%;
+	min-height: 100vh;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }
 
 header {
 	text-align: center;
+	padding: 20px 0;
+}
+
+.main-overlay {
+	background: linear-gradient(0deg, rgba($greyColor,0.3) 0%, rgba($sandColor, 0.2) 100%);
+	min-height: 100vh;
+	display: flex;
+	// align-items: center;
+	justify-content: center;
+	position: relative;
 }
 
 .main-wrapper {
-	background: #fff;
+	// background: #fff;
 	max-width: 80%;
-	margin: 0 auto;
+	margin: 60px auto;
+	border-radius: 2px;
+	outline-offset: 70px;
+	outline: 50px solid rgba(0,0,0,0.2);
 }
 
 .wrapper {
@@ -42,9 +69,25 @@ header {
 }
 
 .roadtrip-main {
-	width: 65%;
+	width: 100%;
+	display: flex;
 }
 
 .roadtrip-sidebar {
 	width: 45%;
+	// display: none;
+}
+
+.roadtrip-form {
+	// border: 1px solid red;
+	display: flex;
+	flex-direction: column;
+	input {
+		background: rgba(0,0,0,0.2);
+		width: 100%;
+		padding: 20px;
+		&::placeholder {
+			// color: white;
+		}
+	}
 }

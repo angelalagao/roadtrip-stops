@@ -55,8 +55,9 @@ export default class RoadTripMap extends React.Component {
 
 
 		this.map = new google.maps.Map(this.refs.map, {
-			center: {lat: 43.6532, lng: -79.3832},
-			zoom: 12
+			center: {lat: 0, lng: 0},
+			zoom: 12,
+			styles: [{ "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{ "color": "#1D3543" }] }, { "featureType": "administrative.country", "elementType": "all", "stylers": [{ "saturation": "0" }] }, { "featureType": "landscape", "elementType": "all", "stylers": [{ "color": "#F1F2F7" }] }, { "featureType": "poi", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "road", "elementType": "all", "stylers": [{ "saturation": -100 }, { "lightness": 45 }] }, { "featureType": "road.highway", "elementType": "all", "stylers": [{ "visibility": "simplified" }] }, { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#9CC9DD" }, { "visibility": "on" }] }, { "featureType": "water", "elementType": "labels.text.fill", "stylers": [{ "lightness": "11" }, { "saturation": "18" }] }]
 		});
 
 		this.setState({
@@ -154,12 +155,19 @@ export default class RoadTripMap extends React.Component {
 			});
 		}
 		if (this.state.userStops !== prevState.userStops) {
+			// const customMarker = {
+			// 	url: '../../assets/pin.svg',
+			// 	size: new google.maps.Size(50, 70),
+			// 	anchor: new google.maps.Point(0, 70),
+			// 	scaledSize: new google.maps.Size(50, 70)
+			// }
 			this.state.userStops.forEach(stop => {
 				const lat = stop.stops.roadtrip_latLng.lat;
 				const lng = stop.stops.roadtrip_latLng.lng;
 				const marker = new google.maps.Marker({
 					position: {lat, lng},
 					map: this.state.map
+					// icon: customMarker
 				});
 			});
 		}

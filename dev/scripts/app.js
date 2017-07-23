@@ -75,26 +75,27 @@ class App extends React.Component {
 		return (
 			// hide the map on first run - then on submit of the form - show map
 			<Router>
-				<main className="main-wrapper">
-					<header>
-						<h1>Roadtrip Stops</h1>
-					</header>
-					<div className="wrapper">
-						<div className="roadtrip-main">
-							<RoadTripForm addRoadTrip={this.addRoadTrip} renderMap={this.renderMap}/>
-							{showMap}
-							{/*<RoadTripMap hideMap={this.state.hideMap} roadTrip={this.state.roadTrip}/>*/}
+				<div className="main-overlay">
+					{showMap}
+					<main className="main-wrapper">
+						<header>
+							<h1>Roadtrip Stops</h1>
+						</header>
+						<div className="wrapper">
+							<div className="roadtrip-main">
+								<RoadTripForm addRoadTrip={this.addRoadTrip} renderMap={this.renderMap}/>
+							</div>
+							<div className="roadtrip-sidebar">
+								{/*on click of this button a modal should appear*/}
+								<button onClick={this.renderModal}>Add a Roadtrip Stop</button>
+								<AddRoadTripStop 
+									isModalOpen={this.state.isModalOpen} 
+									closeModal={this.closeModal}
+								/>
+							</div>
 						</div>
-						<div className="roadtrip-sidebar">
-							{/*on click of this button a modal should appear*/}
-							<button onClick={this.renderModal}>Add a Roadtrip Stop</button>
-							<AddRoadTripStop 
-								isModalOpen={this.state.isModalOpen} 
-								closeModal={this.closeModal}
-							/>
-						</div>
-					</div>
-				</main>
+					</main>
+				</div>
 			</Router>
 		)
 	}
