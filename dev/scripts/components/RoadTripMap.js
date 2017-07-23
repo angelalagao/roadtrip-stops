@@ -158,12 +158,6 @@ export default class RoadTripMap extends React.Component {
 			});
 		}
 		if (this.state.userStops !== prevState.userStops) {
-			// const customMarker = {
-			// 	url: '../../assets/pin.svg',
-			// 	size: new google.maps.Size(50, 70),
-			// 	anchor: new google.maps.Point(0, 70),
-			// 	scaledSize: new google.maps.Size(50, 70)
-			// }
 			this.state.userStops.forEach(stop => {
 				const lat = stop.stops.roadtrip_latLng.lat;
 				const lng = stop.stops.roadtrip_latLng.lng;

@@ -103,14 +103,10 @@ export default class AddRoadTripStop extends React.Component {
 	}
 
 	render() {
+		// refactor modal
 		const openModal = {
 			visibility: 'visible',
-			opacity: 1,
-			position: 'absolute',
-			top: 0,
-			zIndex: 9,
-			left: '50%',
-			background: 'white'
+			opacity: 1
 		}
 		const hideModal = {
 			visibility: 'hidden',

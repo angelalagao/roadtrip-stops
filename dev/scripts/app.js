@@ -109,7 +109,7 @@ class App extends React.Component {
 								{/*on click of this button a modal should appear*/}
 								<button onClick={this.renderModal}
 									style={this.state.formSubmitted ? buttonStyle : null}>
-									Add a Roadtrip Stop
+									Suggest a Cool Stop
 								</button>
 								<AddRoadTripStop 
 									isModalOpen={this.state.isModalOpen} 

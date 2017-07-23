@@ -63,11 +63,11 @@ export default class RoadTripForm extends React.Component {
 				<input onChange={(e) => this.autocomplete(e)} 
 						ref={(input) => this.origin = input}
 						id="origin"
-						type="text" placeholder="Origin"/>
+						type="text" placeholder="Origin" required/>
 				<input onChange={(e) => this.autocomplete(e)}
 						ref={(input) => this.dest = input}
 						id="dest"
-						type="text" placeholder="Destination"/>
+						type="text" placeholder="Destination" required/>
 				<button className="roadtrip__button" type="submit">Get Roadtrip Stops</button>
 			</form>
 		)
