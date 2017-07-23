@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 import {
 	BrowserRouter as Router,
 	NavLink as Link,
-	Route,
-	Match,
-	Miss
+	Route
 } from 'react-router-dom';
 import RoadTripForm from './components/RoadTripForm.js';
 import RoadTripMap from './components/RoadTripMap.js';
@@ -75,16 +73,15 @@ class App extends React.Component {
 		return (
 			// hide the map on first run - then on submit of the form - show map
 			<Router>
-				<div className="main-overlay">
+				<div className="map-background">
 					{showMap}
 					<main className="main-wrapper">
 						<header>
 							<h1>Roadtrip Stops</h1>
+							<p>Search some cool stops along your roadtrip route! Or suggest some cool stops for other roadtrippers!</p>
 						</header>
 						<div className="wrapper">
-							<div className="roadtrip-main">
-								<RoadTripForm addRoadTrip={this.addRoadTrip} renderMap={this.renderMap}/>
-							</div>
+							<RoadTripForm addRoadTrip={this.addRoadTrip} renderMap={this.renderMap}/>
 							<div className="roadtrip-sidebar">
 								{/*on click of this button a modal should appear*/}
 								<button onClick={this.renderModal}>Add a Roadtrip Stop</button>

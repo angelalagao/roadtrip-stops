@@ -11,6 +11,12 @@ import { loadJS } from '../helper.js';
 // can save roadtrip on their profile - using firebase
 
 export default class RoadTripForm extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			submitted: false
+		}
+	}
 	componentDidMount() {
 		loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyDAdUowwXhd2XJ22KGgBY6X2VaR1P6t21k&libraries=places');
 	}
@@ -32,10 +38,20 @@ export default class RoadTripForm extends React.Component {
 		this.props.renderMap();
 		// need to call initmap again on submit
 		window.initMap;
+		this.setState({
+			submitted: true
+		});
 	}
 	render() {
+		const submittedStyle = {
+			position: 'absolute',
+			top: '50px',
+			left: '50px',
+			zIndex: 3,
+			width: '20%'
+		}
 		return (
-			<form onSubmit={(e) => this.roadtripSubmit(e)} className="roadtrip-form">
+			<form onSubmit={(e) => this.roadtripSubmit(e)} className="roadtrip-form" style={this.state.submitted ? submittedStyle : null}>
 				<input onChange={(e) => this.autocomplete(e)} 
 						ref={(input) => this.origin = input}
 						id="origin"
