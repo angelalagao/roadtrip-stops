@@ -107,7 +107,6 @@ export default class RoadTripMap extends React.Component {
 	getRouteCoordinates(response) {
 		const routeArray = response.routes[0]; // returned as an object
 		const route = routeArray.overview_path;
-		console.log(response);
 
 		let routes = route.map(singleRoute => {
 			return {
