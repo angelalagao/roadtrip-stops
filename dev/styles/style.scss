@@ -126,5 +126,7 @@ header {
 	z-index: 9;
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
-	background: white;
+	background: rgba(white, .9);
+	border: 10px solid $blueColor;
+	border-radius: 5px;
 }
