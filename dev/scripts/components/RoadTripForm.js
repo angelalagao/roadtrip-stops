@@ -60,15 +60,22 @@ export default class RoadTripForm extends React.Component {
 		}
 		return (
 			<form onSubmit={(e) => this.roadtripSubmit(e)} className="roadtrip-form" style={this.state.submitted ? submittedStyle : null}>
+				<label htmlFor="origin"><i className="material-icons">my_location</i> Starting Point:</label>
 				<input onChange={(e) => this.autocomplete(e)} 
 						ref={(input) => this.origin = input}
 						id="origin"
-						type="text" placeholder="Origin" required/>
+						name="origin"
+						type="text" placeholder={this.state.submitted ? "Origin" : "e.g. Toronto, Ontario"} 
+						required />
+				<label htmlFor="origin"><i className="material-icons">beenhere</i> Destination:</label>
 				<input onChange={(e) => this.autocomplete(e)}
 						ref={(input) => this.dest = input}
 						id="dest"
-						type="text" placeholder="Destination" required/>
-				<button className="roadtrip__button" type="submit">Get Roadtrip Stops</button>
+						type="text" placeholder={this.state.submitted ? "Destination" : "e.g. Winnipeg, Manitoba"}
+						required />
+				<button className="roadtrip__button" type="submit">
+					<i className="material-icons">directions_car</i>
+				</button>
 			</form>
 		)
 	}

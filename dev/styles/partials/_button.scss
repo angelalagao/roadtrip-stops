@@ -1,8 +1,8 @@
 button {
 	margin: 10px;
-		padding: 20px;
-		background-color: white;
-		border: 2px solid $greyColor;
+		padding: 0 30px;
+		background-color: $blueColor;
+		border: 4px dashed darken($blueColor, 20);
 		border-radius: 5px;
 		text-align: center;
 		position: relative;
@@ -17,6 +17,9 @@ button {
 			bottom: 0;
 			height: 3px;
 			background: $sandColor;
+			i {
+				transform: translateX(5px);
+			}
 		}
 		&:hover {
 			cursor: pointer;

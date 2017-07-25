@@ -118,7 +118,7 @@ export default class AddRoadTripStop extends React.Component {
 					<label htmlFor="roadtrip_stop">Roadtrip Stop</label>
 					<input onChange={(e) => this.autocomplete(e)}
 							ref={(input) => this.stop = input} id="roadtrip_stop"
-							type="text" name="roadtrip_stop" placeholder=""/>
+							type="text" name="roadtrip_stop" placeholder="e.g Niagara Falls"/>
 					<fieldset>
 						<label htmlFor="roadtrip_image">Upload Images</label>
 						<input ref={(input) => this.image = input} type="file"

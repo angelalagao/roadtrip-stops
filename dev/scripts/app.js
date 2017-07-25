@@ -99,18 +99,20 @@ class App extends React.Component {
 					{showMap}
 					<main className="main-wrapper">
 						<header>
-							<h1>Roadtrip Stops</h1>
-							<p>Search some cool stops along your roadtrip route! Or suggest some cool stops for other roadtrippers!</p>
+							<h1>Roadtrip <span className="stops">Stops</span></h1>
+							<p>Search for cool stops along your roadtrip route! Or suggest some cool stops for other roadtrippers!</p>
 						</header>
 						<div className="wrapper">
 							<RoadTripForm addRoadTrip={this.addRoadTrip} renderMap={this.renderMap} 
 								submitForm={this.submitForm}/>
 							<div className="roadtrip-sidebar">
 								{/*on click of this button a modal should appear*/}
-								<button onClick={this.renderModal}
-									style={this.state.formSubmitted ? buttonStyle : null}>
-									Suggest a Cool Stop
-								</button>
+								<i className="material-icons add-stop"
+									onClick={this.renderModal}
+									style={this.state.formSubmitted ? buttonStyle : null}
+									htmlFor="Adding roadtrip stop">
+									add_location
+								</i>
 								<AddRoadTripStop 
 									isModalOpen={this.state.isModalOpen} 
 									closeModal={this.closeModal}

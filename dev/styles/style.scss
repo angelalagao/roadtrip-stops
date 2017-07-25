@@ -10,16 +10,24 @@ body {
 	font-size: 1.6rem;
 	font-family: $bodyFont;
 	background-color: $lightGrey;
+	background: linear-gradient(0deg, rgba($blueColor,0.9) 0%, rgba($lightGrey, 0.8) 100%);
 	// background: url('../../assets/bground.jpg') no-repeat;
 	// background-size: cover;
 }
 
 h1 {
 	font-family: $titleFont;
-	font-size: 4.8rem;
+	font-size: 6.2rem;
 	letter-spacing: 3.4px;
 	margin: 0;
-	// text-shadow: 2px 2px 1px #000;
+}
+
+.stops {
+	padding: 5px;
+	padding-bottom: 10px;
+	border: 10px dashed $blueColor;
+	border-right: 10px solid $blueColor;
+	border-left: none;
 }
 
 #map {
@@ -39,25 +47,27 @@ h1 {
 
 header {
 	text-align: center;
-	padding: 20px 0;
+	padding: 20px;
+	margin: 20px;
+	p {
+		margin: 25px 0;
+		padding-top: 10px;
+		font-size: 1.8rem;
+	}
 }
 
 .map-background {
-	// background: linear-gradient(0deg, rgba($greyColor,0.3) 0%, rgba($sandColor, 0.2) 100%);
 	min-height: 100vh;
 	display: flex;
-	// align-items: center;
 	justify-content: center;
 	position: relative;
 }
 
 .main-wrapper {
-	// background: #fff;
 	max-width: 80%;
 	margin: 60px auto;
-	border-radius: 2px;
-	outline-offset: 70px;
-	outline: 50px solid rgba(0,0,0,0.2);
+	outline-offset: 10px;
+	outline: 50px solid rgba($lightGrey, 0.7);
 }
 
 .wrapper {
@@ -67,30 +77,54 @@ header {
 	margin: 0 auto;
 }
 
-.roadtrip-sidebar {
-	width: 45%;
-	// display: none;
-}
-
 .roadtrip-form {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	label {
+		display: flex;
+		i {
+			padding: 0 5px;
+			color: darken($blueColor, 20);
+		}
+	}
 	input {
-		background: rgba(0,0,0,0.2);
+		background: rgba($sandColor, .3);
 		width: 100%;
 		padding: 20px;
+		margin: 15px 0;
+		border: none;
 		&::placeholder {
-			// color: white;
+			color: $sandColor;
+		}
+	}
+	button {
+		align-self: center;
+		i {
+			font-size: 4.2rem;
+			color: $sandColor;
 		}
 	}
 }
 
+.add-stop {
+	position: absolute;
+	top: 50px;
+	right: 50px;
+	font-size: 5.8rem;
+	color: darken($blueColor, 20);
+	&:hover {
+		cursor: pointer;
+		color: $greyColor;
+	}
+}
+
 .form-modal {
+	padding: 25px;
 	position: absolute;
 	top: 50%;
 	z-index: 9;
 	left: 50%;
-	transform: translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
 	background: white;
 }
