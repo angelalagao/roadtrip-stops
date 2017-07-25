@@ -20,6 +20,7 @@ h1 {
 	font-size: 6.2rem;
 	letter-spacing: 3.4px;
 	margin: 0;
+	text-align: center;
 }
 
 .stops {
@@ -144,8 +145,10 @@ label {
 }
 
 .add-stop__button {
+	text-align: center;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 }
 
 .close-button {
@@ -156,5 +159,23 @@ label {
 	right: 5px;
 	&:hover {
 		cursor: pointer;
+	}
+}
+
+// /* Portrait tablet and small desktops */
+@media (max-width: 940px) {
+}
+
+// /* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+	
+}
+
+// /* Landscape phones and down */
+@media (max-width: 480px) {
+	.stops {
+		border: 5px dashed $blueColor;
+		border-right: 5px solid $blueColor;
+		border-left: none;
 	}
 }
