@@ -77,17 +77,18 @@ header {
 	margin: 0 auto;
 }
 
+label {
+	display: flex;
+	i {
+		padding: 0 5px;
+		color: darken($blueColor, 20);
+	}
+}
+
 .roadtrip-form {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	label {
-		display: flex;
-		i {
-			padding: 0 5px;
-			color: darken($blueColor, 20);
-		}
-	}
 	input {
 		background: rgba($sandColor, .3);
 		width: 100%;
@@ -126,7 +127,33 @@ header {
 	z-index: 9;
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
-	background: rgba(white, .9);
-	border: 10px solid $blueColor;
+	background: white;
+	// border: 10px solid $blueColor;
 	border-radius: 5px;
+	form {
+		display: flex;
+		flex-direction: column;
+	}
+	input, textarea {
+		margin: 5px 0;
+		padding: 5px;
+		border: none;
+		border: 2px solid $blueColor;
+	}
+}
+
+.add-stop__button {
+	display: flex;
+	justify-content: center;
+}
+
+.close-button {
+	font-size: 2.8rem;
+	color: $blueColor;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	&:hover {
+		cursor: pointer;
+	}
 }

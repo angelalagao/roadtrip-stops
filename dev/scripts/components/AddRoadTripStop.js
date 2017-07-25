@@ -115,12 +115,12 @@ export default class AddRoadTripStop extends React.Component {
 		return (
 			<div className="form-modal" ref="roadtripForm" style={this.props.isModalOpen ? openModal : hideModal}>
 				<form onSubmit={(e) => this.submitStop(e)}>
-					<label htmlFor="roadtrip_stop">Roadtrip Stop</label>
+					<label htmlFor="roadtrip_stop"><i className="material-icons">whatshot</i> Cool Roadtrip Stop:</label>
 					<input onChange={(e) => this.autocomplete(e)}
 							ref={(input) => this.stop = input} id="roadtrip_stop"
 							type="text" name="roadtrip_stop" placeholder="e.g Niagara Falls"/>
 					<fieldset>
-						<label htmlFor="roadtrip_image">Upload Images</label>
+						<label htmlFor="roadtrip_image"><i className="material-icons">photo_camera</i> Upload Images</label>
 						<input ref={(input) => this.image = input} type="file"
 								name="roadtrip_image" accept="image/*" multiple="multiple" />
 						<button onClick={(e) => this.uploadImage(e)}>Upload Image</button>
@@ -129,8 +129,9 @@ export default class AddRoadTripStop extends React.Component {
 								ref={(input) => this.suggestion = input}
 								cols="30" rows="10" 
 							placeholder="This place was cool because..."></textarea>
-					<button type="submit">+Add Stop</button>
+					<button type="submit" className="add-stop__button">Add Stop<i className="material-icons">tag_faces</i></button>
 				</form>
+				<i className="material-icons close-button" onClick={this.props.closeModal}>close</i>
 			</div>
 		)
 	}
